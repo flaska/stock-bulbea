@@ -1,15 +1,10 @@
 import data
-from bulbea.learn.models import RNN
+import model
+import eval
 
-(Xtrain, Xtest), (ytrain, ytest) = data.get_data()
+(Xtrain, ytrain), (Xtest, ytest) = data.get_data()
+model.fit(Xtrain, ytrain)
+prediction = model.predict(Xtest)
 
-rnn = RNN([1, 100, 100, 1])
-rnn.fit(Xtrain, ytrain)
+eval.evaluate(ytest, prediction)
 
-from sklearn.metrics import mean_squared_error
-p = rnn.predict(Xtest)
-mean_squared_error(ytest, p)
-import matplotlib.pyplot as pplt
-pplt.plot(ytest)
-pplt.plot(p)
-pplt.show()
